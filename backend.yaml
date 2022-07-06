@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
       - name:  backend
-        image:  josueriv/backend:0.1.0
+        image:  josueriv/backend:0.1.0-gcp
         resources:
           requests:
             cpu: 100m
