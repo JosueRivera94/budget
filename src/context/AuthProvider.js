@@ -3,7 +3,7 @@ import { useCookies } from 'react-cookie';
 import AuthContext from './auth-context';
 
 const AuthProvider = (props) => {
-  const [cookies, removeCookie] = useCookies(['auth_token']);
+  const [cookies, setCookie, removeCookie] = useCookies(['auth_token']);
   const [currentUser, setCurrentUser] = useState({});
   const [loadingUserInfo, setLoadingUserInfo] = useState(true);
 
@@ -26,6 +26,7 @@ const AuthProvider = (props) => {
           }
         );
         const data = await response.json();
+        setCookie('auth_token',data.data[0].auth_token, {expires: new Date(2147483647 * 1000)} )
         setCurrentUser(data.data[0]);
         resolve();
       } catch (e) {
@@ -52,6 +53,7 @@ const AuthProvider = (props) => {
           }
         );
         const data = await response.json();
+        setCookie('auth_token',data.data[0].auth_token, {expires: new Date(2147483647 * 1000)} )
         setCurrentUser(data.data[0]);
         resolve();
       } catch (e) {
@@ -88,6 +90,7 @@ const AuthProvider = (props) => {
             }
           );
           const data = await response.json();
+          data.data[0].auth_token = cookies.auth_token;
           setCurrentUser(data.data[0]);
         } catch (error) {
           console.log(error);
