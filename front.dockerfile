@@ -8,7 +8,7 @@
 
 FROM node:16.15.0-stretch as compilacion
 
-ENV REACT_APP_BACKEND=http://localhost:8000
+ENV REACT_APP_BACKEND=http://35.222.53.129:8000
 
 # Copy application
 COPY . /opt/app

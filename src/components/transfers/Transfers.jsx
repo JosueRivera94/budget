@@ -195,7 +195,7 @@ function Transfers() {
     const categoria_id = 5;
     
 
-    if (cuenta_id_origen === '' || cuenta_destino==='' || cantidad === '') return setError('Failed to add transfer');
+    if (cuenta_id_origen === '' || cuenta_id_destino==='' || cantidad === '') return setError('Failed to add transfer');
     setDisableSubmit(true);
     try {
       await createTransfer({ cuenta_id_origen,cantidad,cuenta_id_destino });
@@ -232,6 +232,7 @@ function Transfers() {
 
           <form onSubmit={handleAddTransfer}>
             <label>Add transfer</label> 
+            console.log()
 
               <StyledLabel>Select Origin Account</StyledLabel>
               <StyledSelect onChange={event => setIdCuentaOrigen(event.target.value)}>
