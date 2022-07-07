@@ -16,6 +16,22 @@ spec:
 
 ---
 
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: database-pv-claim
+  namespace: default
+  labels:
+    app: database
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
+
+---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -33,6 +49,14 @@ spec:
       labels:
         app:  database
     spec:
+      securityContext: 
+        runAsUser: 54321
+        runAsGroup: 54321
+        fsGroup: 54321
+      volumes:
+      - name: database-persistent-storage
+        persistentVolumeClaim:
+          claimName: database-pv-claim
       containers:
       - name: oracle-xe
         image: gvenzl/oracle-xe:21.3.0
@@ -50,5 +74,8 @@ spec:
         ports:
         - containerPort:  1521
           name:  database
+        volumeMounts: 
+        - name: database-persistent-storage
+          mountPath: /opt/oracle/oradata
 
 ---
